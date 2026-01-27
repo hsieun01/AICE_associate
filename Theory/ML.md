@@ -18,7 +18,11 @@ lr.fit(X_train, y_train)
 # 예측
 y_pred = lr.predict(X_test)
 
-### 2. RandomForestClassifier - 배깅 트리 기반 분류
+### 2) DecisionTreeClassifier - 해석하기 좋음 (투명한 모델)
+from sklearn.tree import DecisionTreeClassifier
+dt = DecisionTreeClassifier(random_state=42)
+
+### 3. RandomForestClassifier - 배깅 트리 기반 분류
 from sklearn.ensemble import RandomForestClassifier
 # 모델 생성
 rfc = RandomForestClassifier(
@@ -34,7 +38,7 @@ y_pred = rfc.predict(X_test)
 # 특성 중요도 (지원!)
 importances = rfc.feature_importances_
 
-### 3. XGBClassifier
+### 4. XGBClassifier
 from xgboost import XGBClassifier
 # 모델 생성
 xgb = XGBClassifier(
@@ -50,5 +54,32 @@ y_pred = model.predict(X_test)
 # 특성 중요도 (지원!)
 importances = xgb.feature_importances_
 
+### 1. LinearRegression
+from sklearn.linear_model import LinearRegression
+model = LinearRegression()
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+피처 중요도 없음
+
+### 2. RandomForestRegressor
+from sklearn.ensemble import RandomForestRegressor
+model = RandomForestRegressor(n_estimators=100)
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+importances = model.feature_importances_
+
+### 3. DecisionTreeRegressor
+from sklearn.tree import DecisionTreeRegressor
+model = DecisionTreeRegressor(max_depth=5)
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+importances = model.feature_importances_
+
+### 4. XGBRegressor
+from xgboost import XGBRegressor
+model = XGBRegressor(n_estimators=100)
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+importances = model.feature_importances_
 
 
