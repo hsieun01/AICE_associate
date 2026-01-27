@@ -27,7 +27,7 @@
 - 이상치 찾기
 ### heatmap
 - corr = df.corr(numeric_only=True
-- sns.heatmap(corr, annot=True, cmap="coolmarm")
+- sns.heatmap(corr, annot=True, cmap="coolwarm")
 - 상관관계 확인
 - annot=True : 셀 안에 상관관계 숫자 표시
 ### implot
