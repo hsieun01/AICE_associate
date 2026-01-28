@@ -49,11 +49,12 @@ X_train, X_valid, y_train, y_valid = train_test_split(
 features, target, test_size=0.25, random_state=100, stratify=target)
 
 # 훈련데이터셋과 검증데이터셋에 스케일링
+# fit은 train에서만 함.
 from sklearn.preprocessing import RobustScaler 
 rs = RobustScaler()
 
 X_train_scaled = rs.fit_transform(X_train)
-X_valid_scaled = rs.fit_transform(X_valid)
+X_valid_scaled = rs.transform(X_valid)
 
 # 태아 건강 상태를 예측하는 머신러닝 모델생
 from sklearn.linear_model import LogisticRegression
@@ -77,6 +78,14 @@ print(classification_report(y_pred_lr, y_valid))
 print(classification_report(y_pred_xgbrf, y_valid))
 
 # 중요도
+feature_importance = xgbrf.feature_importances_
+feature_name = features.columns
+
+df_importance = pd.DataFrame({'importance': feature_importance,
+                              'features': feature_name})
+                              
+df_importance.sort_values(by='importance', ascending=False, inplace=True)
+display(df_importance)
 
 # 딥러닝 라이브러리
 import random
@@ -92,3 +101,50 @@ np.random.seed(42)
 tf.random.set_seed(42)
 tf.keras.utils.set_random_seed(42)
 # print(tf.config.list_physical_devices('CPU')) 
+
+y_train = to_categorical(y_train, num_classes=3)
+y_valid = to_categorical(y_valid, num_classes=3)
+
+# 딥러닝 모델
+model = Sequential([
+    Dense(32, activation='selu', input_shape=(features.shape[1],)),
+    Dense(64, activation='selu'),
+    Dropout(0.3),
+    Dense(16, activation='selu'),
+    BatchNormalization(),
+    Dense(3, activation='softmax')
+])
+
+model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+
+es = EarlyStopping(monitor='val_loss', patience=7, restore_best_weights=True)
+mc = ModelCheckpoint('best_model.h5', save_best_only=True)
+
+history = model.fit(X_train_scaled, y_train, epochs=80, batch_size=128, validation_data=(X_valid_scaled, y_valid), callbacks=[es, mc])
+요.
+# 성능평가
+plt.plot(history.history['loss'], label='Train Loss')
+plt.plot(history.history['val_loss'], label='Validation Loss')
+
+plt.legend()
+plt.title('Model Categorical Crossentropy')
+plt.xlabel('Epochs')
+plt.ylabel('Loss')
+
+simul = np.array([0.13333333,0.8,0.5,0.91490668,0,0,0,0.58939436,-0.3,0,0.31746032,-0.44444444,0.50943396,-0.09090909,0.36842105,0.31578947,0.26315789,-0.04597701]).reshape(1, -1)
+
+# 시뮬레이션
+best_dl = load_model('best_model.h5')
+print(best_dl.predict(simul))
+
+
+
+
+
+
+
+
+
+
+
+
