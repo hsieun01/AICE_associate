@@ -106,8 +106,9 @@ y_train = to_categorical(y_train, num_classes=3)
 y_valid = to_categorical(y_valid, num_classes=3)
 
 # 딥러닝 모델
+# inpot=shape() 안넣어도 됨.
 model = Sequential([
-    Dense(32, activation='selu', input_shape=(features.shape[1],)),
+    Dense(32, activation='selu'),
     Dense(64, activation='selu'),
     Dropout(0.3),
     Dense(16, activation='selu'),
