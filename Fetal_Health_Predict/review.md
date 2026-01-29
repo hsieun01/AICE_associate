@@ -40,9 +40,12 @@
     - 각 에포크마다 검증 데이터 셋 지정
 - 조기 종료 설정: EarlyStopping(~~)
   - es = 
-  - monitor=
-  - patience=
+  - monitor= 'val_loss'
+    - val_loss를 보고 
+  - patience= 5
+    - 5번 이상 반복했는데 성능이 향상되지 않으면 종료시킴
   - restore_best_weights=True
+    - 가장 낮은 검증 손실을 낸 모델로 복구
 - 모델 저장 설정: ModelCheckpoint(~~)
   - mc = 
   - save_best_only=True
