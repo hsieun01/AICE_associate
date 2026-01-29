@@ -16,10 +16,10 @@
 - y_pred_lr = lr.predict(X_valid_scaled)
 - y_pred_xgbrf = xgbrf.predict(X_valid_scaled)
   - 예측 값을 구하기 위해 필요한 것은 테스트 입력값 하나임.
-- print(classification_report(y_pred_lr, y_valid))
-- print(classification_report(y_pred_xgbrf, y_valid))
+- print(classification_report(y_valid, y_pred_lr))
+- print(classification_report(y_valid, y_pred_xgbrf))
   - 분류 리포트는 모델 함수가 아니기 때문에 '모델.repert' 이런식으로 쓰지 않음.
-  - 리포트(예측값, 실제값) 순서 주의
+  - 리포트(실제값, 예측값) 순서 주의
  
 ### 15번. 딥러닝 모델 생성
 - Bulid단계(모델 구조): model = Sequential([~~])
@@ -32,11 +32,23 @@
   -  BatchNormalization()은 학습 안정화
     - 각 층 입력을 정규화
 - Complie 단계(학습 설정): model.coplie(~~)
-   - optimizer=' '
-     - 손실함수를 최적화하기 위한 알고리즘 지정
-   - loss=' '
-     - 손실함수 지정
-   - metrics=[' ']
-     - 각 에포크마다 검증 데이터 셋 지정
-- Fit 단계(학습): 
+  - optimizer=' '
+    - 손실함수를 최적화하기 위한 알고리즘 지정
+  - loss=' '
+    - 손실함수 지정
+  - metrics=[' ']
+    - 각 에포크마다 검증 데이터 셋 지정
+- 조기 종료 설정: EarlyStopping(~~)
+  - es = 
+  - monitor=
+  - patience=
+  - restore_best_weights=True
+- 모델 저장 설정: ModelCheckpoint(~~)
+  - mc = 
+  - save_best_only=True
+- 학습 실행 단계: history = model.fit(~~)
+  - x_train, y_train
+  - 하이파라미터
+  - validation_data = (x_test, y_test)
+  - callbacks = [es,mc]
     
