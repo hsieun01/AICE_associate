@@ -42,8 +42,8 @@
   - es = 
   - monitor= 'val_loss'
     - val_loss를 보고 
-  - patience= 5
-    - 5번 이상 반복했는데 성능이 향상되지 않으면 종료시킴
+  - patience= 7
+    - 7번 이상 반복했는데 성능이 향상되지 않으면 종료시킴
   - restore_best_weights=True
     - 가장 낮은 검증 손실을 낸 모델로 복구
 - 모델 저장 설정: ModelCheckpoint(~~)
@@ -52,6 +52,13 @@
 - 학습 실행 단계: history = model.fit(~~)
   - x_train, y_train
   - 하이파라미터
-  - validation_data = (x_test, y_test)
+  - validation_data = (X_valid, y_valid)
   - callbacks = [es,mc]
     
+### 16번. 딥러닝의 모델의 성능평가 시각화
+- plt.plot(history.history['loss'], label='Train Loss')
+  - 학습 손실함수 그래프
+- plt.plot(history.history['val_loss'], label='Validation Loss')
+  - 검증 손실함수 그래프
+- plt.legend()
+  - 두 그래프의 범례
