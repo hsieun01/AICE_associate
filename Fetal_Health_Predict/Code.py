@@ -74,8 +74,8 @@ from sklearn.metrics import classification_report
 y_pred_lr = lr.predict(X_valid_scaled)
 y_pred_xgbrf = xgbrf.predict(X_valid_scaled)
 
-print(classification_report(y_pred_lr, y_valid))
-print(classification_report(y_pred_xgbrf, y_valid))
+print(classification_report(y_valid, y_pred_lr))
+print(classification_report(y_valid, y_pred_xgbrf))
 
 # 중요도
 feature_importance = xgbrf.feature_importances_
