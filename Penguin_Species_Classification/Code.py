@@ -59,7 +59,7 @@ print(X_train.shape, X_valid.shape)
 from sklearn.preprocessing import StandardScaler
 sc = StandardScaler()
 X_train_s = sc.fit_transform(X_train)
-X_valid_s = sc.fit_transform(X_valid)
+X_valid_s = sc.transform(X_valid)
 
 # 랜덤포레스트로 학습시키고 예측 정확도 확인
 from sklearn.ensemble import RandomForestClassifier
